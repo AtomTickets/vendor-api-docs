@@ -1,2 +1,2 @@
-# vendor-api-docs
-Atom Tickets Vendor API Docs
+# Vendor Operation Service API
+Atom Ticket's Vendor Operation Service API Docs

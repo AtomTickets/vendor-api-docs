@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Atom Tickets Partner APIs</title>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+            /*# sourceMappingURL=normalize.min.css.map */
+        </style>
+        <style>
+            body {
+                padding: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #1f242e;
+            }
+            pre {
+                font-family: "Lucida Console", Monaco, monospace;
+                border-radius: 4px;
+                background-color: #1f242e;
+                color: #e0dbd1;
+            }
+            table {
+                border-spacing: 0;
+                border-top: solid 1px #dee2e6;
+                width: 100%;
+                border-radius: 4px;
+            }
+            th, td {
+                border: 1px solid #dee2e6;
+                border-width: 0 1px 1px 1px;
+                padding: 5px;
+            }
+            th {
+                padding: 10px 6px;
+                text-transform: uppercase;
+                text-align: left;
+            }
+            tbody > tr:nth-child(2n - 1) {
+                background-color: #f4f4f4;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                padding: 0;
+                margin: 16px 0;
+            }
+            h1 {
+                border-bottom: 4px solid #1f242e;
+            }
+            h2 {
+                padding: 16px;
+                border-radius: 4px;
+                border: 1px solid #dee2e6;
+                -webkit-box-shadow: 0px 2px 11px 0px rgba(0,0,0,0.45);
+                -moz-box-shadow: 0px 2px 11px 0px rgba(0,0,0,0.45);
+                box-shadow: 0px 2px 11px 0px rgba(0,0,0,0.45);
+            }
+
+        </style>
+    </head>
+
+    <body>
+      <h1>
+          <span>Atom Tickets Partner APIs</span>
+      </h1>
+
+      <h2>API Endpoints</h2>
+      <table>
+          <thead>
+          <tr>
+              <th>Stage</th>
+              <th>Endpoint</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>beta</td>
+              <td>http://api-beta.atomtickets.com</td>
+          </tr>
+          <tr>
+              <td>gamma</td>
+              <td>http://api-gamma.atomtickets.com</td>
+          </tr>
+          <tr>
+              <td>prod</td>
+              <td>http://api.atomtickets.com</td>
+          </tr>
+          </tbody>
+      </table>
+
+      <h2>API Headers</h2>
+      <table>
+          <thead>
+          <tr>
+              <th>Key</th>
+              <th>Value</th>
+              <th>Required</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="ApiKeyHeader">
+              <td>x-api-key</td>
+              <td>Api key that atom tickets provides</td>
+              <td>Yes</td>
+          </tr>
+          <tr id="AtomPartnerHeader">
+              <td>X-Atom-Partner</td>
+              <td>Agreed upon value per partner if needed for use cases</td>
+              <td>No</td>
+          </tr>
+          </tbody>
+      </table>
+
+      <h2>Limits</h2>
+      <table>
+          <tr>
+              <td>Testing</td>
+              <td>25 requests/sec baseline with a 50 requests/sec burst</td>
+          </tr>
+          <tr>
+              <td>Production</td>
+              <td>Worked out between Atom Tickets and the Partner</td>
+          </tr>
+      </table>
+
+      <h2>Value Defaults and Limits</h2>
+      <table>
+          <thead>
+          <tr>
+              <th>Field</th>
+              <th>Default</th>
+              <th>Max</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>radius</td>
+              <td></td>
+              <td>80km</td>
+          </tr>
+          <tr>
+              <td>pageSize</td>
+              <td>25</td>
+              <td>100</td>
+          </tr>
+          <tr>
+              <td>startDate/endDate difference</td>
+              <td>1 day</td>
+              <td>7 days</td>
+          </tr>
+          </tbody>
+      </table>
+
+      <h2>Common Models</h2>
+    <pre id="PageInfoModel">
+
+  PageInfo(
+    page: Int,
+    pageSize: Int,
+    totalPages: Int
+  )
+    </pre>
+      <pre id="LatLonPairModel">
+  LatLonPair(
+    lat: Double,
+    lon: Double
+  )
+      </pre>
+      <pre id="ISODateBoundsModel">
+  ISODateBounds (
+    isoStartDate: String, // ISO8601 formatted date without milliseconds
+    isoEndDate: String // ISO8601 formatted date without milliseconds
+  )
+      </pre>
+      <pre id="LocalDateBoundsModel">
+  LocalDateBounds (
+    localStartDate: String, // YYYY-MM-DDTHH:MM:SS (no timezone)
+    localEndDate: String // YYYY-MM-DDTHH:MM:SS (no timezone)
+  )
+      </pre>
+
+      <h2>Request Models</h2>
+      <h3>Venues</h3>
+      <pre id="GetVenueDetailsRequestModel">
+  GetVenueDetailsRequest(
+    ids: List[String],
+    location: Option[LatLonPair],
+    page: Option[Int],
+    pageSize: Option[Int]
+  )
+      </pre>
+      <h3>Productions</h3>
+      <pre id="GetProductionDetailsRequestModel">
+  GetProductionDetailsRequest(
+    ids: List[String],
+    marketplaceId: Option[String], // US by default
+    page: Option[Int],
+    pageSize: Option[Int]
+  )
+      </pre>
+      <h3>Showtimes</h3>
+      <pre id="GetShowtimeDetailsRequestModel">
+  GetShowtimeDetailsRequest(
+    ids: List[String],
+    page: Option[Int],
+    pageSize: Option[Int]
+  )
+      </pre>
+      <pre id="GetShowtimesForVenuesRequestModel">
+  GetShowtimesForVenuesRequest (
+    venueIds: Set[String],
+    productionIds: Option[Set[String]],
+    isoDateBounds: Option[ISODateBounds],
+    localDateBounds: Option[LocalDateBounds],
+    includeProductionDetails: Option[Boolean],
+    marketplaceId: Option[String]
+  )
+      </pre>
+
+      <h2>Response Models</h2>
+      <h3>Venues</h3>
+      <pre id="AddressModel">
+  Address(
+    line: String,
+    city: String,
+    state: String,
+    postal: String,
+    lat: Double,
+    lon: Double
+  )
+      </pre>
+      <pre id="PropertiesModel">
+  Properties(
+    supportsConcessions: Boolean
+  )
+      </pre>
+      <pre id="VenueModel">
+  Venue(
+    id: String,
+    name: String,
+    address: Address,
+    properties: Properties,
+    venueUrl: Option[String]
+  )
+      </pre>
+      <pre id="VenueDetailModel">
+  VenueDetail(
+    venue: Venue,
+    kmDistance: Option[Double]
+  )
+      </pre>
+      <pre id="VenueDetailsResponseModel">
+  VenueDetailsResponse(
+    venueDetails: List[VenueDetail],
+    pageInfo: Option[PageInfo]
+  )
+      </pre>
+      <h3>Productions</h3>
+      <pre id="ProductionIdsResponseModel">
+  ProductionIdsResponse(
+    ids: List[String]
+  )
+      </pre>
+      <pre id="ImageDataModel">
+  ImageData(
+    coverImageUrl: String,
+    promoImageUrls: List[String]
+  )
+      </pre>
+      <pre id="TrailerDataModel">
+  TrailerData(
+    trailerUrls: List[String]
+  )
+      </pre>
+      <pre id="ProductionMediaModel">
+  ProductionMedia(
+    imageData: ImageData,
+    trailerData: TrailerData
+  )
+      </pre>
+      <pre id="CastModel">
+  Cast(
+    name: String,
+    characterName: Option[String]
+  )
+      </pre>
+      <pre id="CrewModel">
+  Crew (
+    name: String,
+    role: String
+  )
+      </pre>
+      <pre id="ContributorsModel">
+  Contributors (
+    cast: List[Cast],
+    crew: List[Crew]
+  )
+      </pre>
+      <pre id="ProductionDetailModel">
+  ProductionDetail(
+    id: String,
+    name: String,
+    productionMedia: ProductionMedia,
+    contributors: Contributors,
+    synopsis: Option[String],
+    advisoryRating: Option[String],
+    genres: Option[List[String]],
+    runtimeMinutes: Option[Int],
+    releaseDate: Option[String], // YYYY-MM-DD
+    atomUserScore: Option[Double],
+    productionUrl: Option[String],
+    distributor: Option[String]
+  )
+      </pre>
+      <pre id="ProductionDetailsResponseModel">
+  ProductionDetailsResponse(
+    productionDetails: List[ProductionDetail],
+    pageInfo: Option[PageInfo]
+  )
+      </pre>
+      <h3>Showtimes</h3>
+      <pre id="AttributeModel">
+  Attribute(
+    id: String,
+    type: String,
+    iconUrl: String,
+    friendlyName: Option[String],
+    description: Option[String]
+  )
+      </pre>
+      <pre id="PriceModel">
+  Price(
+    value: BigDecimal,
+    currencyCode: String
+  )
+      </pre>
+      <pre id="OfferModel">
+  Offer(
+    label: String,
+    price: Price
+  )
+      </pre>
+      <pre id="OfferDataModel">
+  OfferData(
+    offers: List[Offer]
+  )
+      </pre>
+      <pre id="ShowtimeDetailModel">
+  ShowtimeDetail(
+    showtimeId: String,
+    productionId: String,
+    venueId: String,
+    offerData: OfferData,
+    utcShowtimeStart: String, // iso8601 formatted date without milliseconds
+    localShowtimeStart: String, // iso8601 formatted date without milliseconds
+    attributes: List[String], // attribute key for attribute map,
+    checkoutUrl: Option[String],
+    availableInventory: Option[Int],
+    tags: Option[Set[String]] // used for special event showtimes
+  )
+      </pre>
+      <pre id="PreOrderDetailModel">
+  PreOrderDetail(
+    productionId: String,
+    venueId: String,
+    showtimeDays: List[String]
+  )
+      </pre>
+      <pre id="ShowtimeDetailsResponseModel">
+  ShowtimeDetailsResponse(
+    showtimeDetails: List[ShowtimeDetail],
+    preOrderDetails: List[PreOrderDetail],
+    attributeMap: Map[String, Attribute]
+  )
+      </pre>
+      <pre id="VenueShowtimeDetailsModel">
+  VenueShowtimeDetails (
+    showtimeDetails: List[ShowtimeDetail],
+    preOrderDetails: List[PreOrderDetail]
+  )
+      </pre>
+      <pre id="ShowtimeDetailsForVenuesResponseModel">
+  ShowtimeDetailsForVenuesResponse (
+    venueShowtimeDetailsMap: Map[String, VenueShowtimeDetails],
+    attributeMap: Map[String, Attribute],
+    productionDetailsMap: Map[String, ProductionDetail]
+  )
+      </pre>
+
+      <h2 id="PartnerAPIs-APIs">APIs</h2>
+      <h3 id="PartnerAPIs-Ping">Ping</h3>
+      <table>
+          <thead>
+          <tr>
+              <th>Verb</th>
+              <th>Route</th>
+              <th>Description</th>
+              <th>Required Query Params/Request Model</th>
+              <th>Optional Query Params</th>
+              <th>Response</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>GET</td>
+              <td>/partner/ping</td>
+              <td>Ping partner API for health check<br/>Requires 'x-api-key'</td>
+              <td></td>
+              <td></td>
+              <td>No Response Body -- Http Status Code 200 if health check is successful</td>
+          </tr>
+          </tbody>
+      </table>
+      <h3 id="PartnerAPIs-Venues">Venues</h3>
+      <table>
+          <thead>
+          <tr>
+              <th>Verb</th>
+              <th>Route</th>
+              <th>Description</th>
+              <th>Required Query Params/Request Model</th>
+              <th>Optional Query Params</th>
+              <th>Response</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>GET</td>
+              <td>/partner/v1/venue/details/byLocation</td>
+              <td><a href="#GetVenueDetailsByLocationExample">Query for venues by location</a></td>
+              <td>
+                  <ul>
+                      <li>lat</li>
+                      <li>lon</li>
+                      <li>radius</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li>page</li>
+                      <li>pageSize</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li><a href="#VenueDetailsResponseModel">VenueDetailsResponse</a></li>
+                      <li>Ordered by distance from lat/lon</li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>POST</td>
+              <td>/partner/v1/venue/details/byIds</td>
+              <td><a href="#GetVenueDetailsByIdsExample">Query for venues by Ids</a></td>
+              <td>
+                  <ul>
+                      <li><a href="#GetVenueDetailsRequestModel">GetVenueDetailsRequest</a></li>
+                  </ul>
+              </td>
+              <td></td>
+              <td>
+                  <ul>
+                      <li><a href="#VenueDetailsResponseModel">VenueDetailsResponse</a>
+                          <ul>
+                              <li>Will include defined kmDistance if LatLonPair is passed in</li>
+                          </ul>
+                      </li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>GET</td>
+              <td>/partner/v1/venue/details/search</td>
+              <td><a href="#SearchVenueDetailsExample">Query for venues by name</a></td>
+              <td>
+                  <ul>
+                      <li>term - search query for venue names</li>
+                      <li>lat</li>
+                      <li>lon</li>
+                      <li>radius</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li>pageSize</li>
+                      <li>page</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li><a href="#VenueDetailsResponseModel">VenueDetailsResponse</a></li>
+                      <li>Ordered by distance from lat/lon</li>
+                  </ul>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+      <h3>Productions</h3>
+      <table>
+          <thead>
+          <tr>
+              <th>Verb</th>
+              <th>Route</th>
+              <th>Description</th>
+              <th>Required Query Params/Request Model</th>
+              <th>Optional Query Params</th>
+              <th>Response</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>GET</td>
+              <td>/partner/v1/production/ids/byVenue/&lt;venueId&gt;</td>
+              <td><a href="#ProductionsByVenueExample">Get the production ids for the venue that are playing during the startDate/endDate inclusive</a></td>
+              <td>
+                  <p>Either</p>
+                  <ul>
+                      <li>isoStartDate - ISO8601 formatted date without milliseconds</li>
+                      <li>isoEndDate - ISO8601 formatted date without milliseconds</li>
+                  </ul>
+                  <p>Or</p>
+                  <ul>
+                      <li>localStartDate - YYYY-MM-DDTHH:MM:SS (no timezone)</li>
+                      <li>localEndDate - YYYY-MM-DDTHH:MM:SS (no timezone)</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li>marketplaceId</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li><a href="#ProductionIdsResponseModel">ProductionIdsResponse</a></li>
+                      <li>Ordered by Atom Meter</li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>POST</td>
+              <td>/partner/v1/production/details/byIds</td>
+              <td><a href="#ProductionsByIdsExample">Get the production details for the production ids</a></td>
+              <td>
+                  <ul>
+                      <li><a href="#GetProductionDetailsRequestModel">GetProductionDetailsRequest</a></li>
+                  </ul>
+              </td>
+              <td></td>
+              <td>
+                  <ul>
+                      <li><a href="#ProductionDetailsResponseModel">ProductionDetailsResponse</a></li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>GET</td>
+              <td>/partner/v1/production/search/byName</td>
+              <td><a href="#ProductionSearchExample">Search for production details by name</a></td>
+              <td>
+                  <ul>
+                      <li>name - production name to search for</li>
+                  </ul>
+              </td>
+              <td></td>
+              <td>
+                  <ul>
+                      <li><a href="#ProductionDetailsResponseModel">ProductionDetailsResponse</a></li>
+                  </ul>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+      <h3>Showtimes</h3>
+      <table>
+          <thead>
+          <tr>
+              <th>Verb</th>
+              <th>Route</th>
+              <th>Description</th>
+              <th>Required Query Params/Request Model</th>
+              <th>Optional Query Params</th>
+              <th>Response</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>GET</td>
+              <td>/partner/v1/showtime/details/byVenue/&lt;venueId&gt;</td>
+              <td>
+                  <p><a href="#ShowtimeDetailsByVenueExample">Get the showtimes for the venue for the startDate/endDate inclusive</a></p>
+                  <p>This includes preOrder showtime data</p>
+              </td>
+              <td>
+                  <p>Either</p>
+                  <ul>
+                      <li>isoStartDate - ISO8601 formatted date without milliseconds</li>
+                      <li>isoEndDate - ISO8601 formatted date without milliseconds</li>
+                  </ul>
+                  <p>Or</p>
+                  <ul>
+                      <li>localStartDate - YYYY-MM-DDTHH:MM:SS (no timezone)</li>
+                      <li>localEndDate - YYYY-MM-DDTHH:MM:SS (no timezone)</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li>productionIds - comma separated string list of production ids</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                      <li><a href="#ShowtimeDetailsResponseModel">ShowtimeDetailsResponse</a></li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>POST</td>
+              <td>/partner/v1/showtime/details/byIds</td>
+              <td><a href="#ShowtimeDetailsByIdsExample">Get the showtime details for the showtime ids</a></td>
+              <td>
+                  <ul>
+                      <li><a href="#GetShowtimeDetailsRequestModel">GetShowtimeDetailsRequest</a></li>
+                  </ul>
+              </td>
+              <td></td>
+              <td>
+                  <ul>
+                      <li><a href="#ShowtimeDetailsResponseModel">ShowtimeDetailsResponse</a></li>
+                  </ul>
+              </td>
+          </tr>
+          <tr>
+              <td>POST</td>
+              <td>/partner/v1/showtime/details/forVenues</td>
+              <td><a href="#ShowtimeDetailsForVenuesExample">Get the showtime details for the venues</a></td>
+              <td>
+                  <ul>
+                      <li><a href="#GetShowtimesForVenuesRequestModel">GetShowtimesForVenuesRequest</a></li>
+                  </ul>
+              </td>
+              <td></td>
+              <td>
+                  <ul>
+                      <li><a href="#ShowtimeDetailsForVenuesResponseModel">ShowtimeDetailsForVenuesResponse</a></li>
+                  </ul>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+
+      <h2>Examples</h2>
+      <table id="GetVenueDetailsByLocationExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/venue/details/byLocation</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td>lat=34.0195&amp;lon=-118.4912&amp;radius=50&amp;pageSize=2</td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+  "venueDetails": [
+  {
+    "venue": {
+      "id": "C00110921804",
+      "name": "AMC Loews Broadway 4"
+    },
+    "kmDistance": 0.628527332801801
+  },
+  {
+    "venue": {
+      "id": "C00401723167",
+      "name": "AMC Santa Monica 7"
+    },
+    "kmDistance": 0.6647355560508852
+  }
+  ],
+  "pageInfo": {
+    "page": 1,
+    "pageSize": 2,
+    "totalPages": 56
+  }
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="GetVenueDetailsByIdsExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/venue/details/byIds</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td><pre>
+{
+    "ids": ["C0057070265"],
+    "location":{
+        "lat":34.0195,
+        "lon":-118.4912
+    }
+}
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+  "venueDetails": [
+  {
+    "venue": {
+      "id": "C0057070265",
+      "name": "Regal L.A. LIVE: A Barco Innovation Center"
+    },
+    "kmDistance": 2.383671824436259
+  }
+  ]
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="SearchVenueDetailsExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/venue/details/search</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td>term=amc&amp;lat=34.0195&amp;lon=-118.4912&amp;radius=50&amp;pageSize=2</td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+  "venueDetails": [
+  {
+    "venue": {
+      "id": "C00110921804",
+      "name": "AMC Loews Broadway 4"
+     },
+     "kmDistance": 0.628527332801801
+  },
+  {
+    "venue": {
+      "id": "C00401723167",
+      "name": "AMC Santa Monica 7"
+     },
+     "kmDistance": 0.6647355560508852
+   }
+   ],
+  "pageInfo": {
+    "page": 1,
+    "pageSize": 2,
+    "totalPages": 13
+  }
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ProductionsByVenueExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/production/ids/byVenue/C0057070265</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td>isoStartDate=2018-09-13T07:00:00Z&amp;isoEndDate=2018-09-14T07:00:00Z</td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+  "ids": [
+    "B00809994585",
+    "B00418470916",
+    "B00311557956",
+    "B0042462790",
+    "B00416490251",
+    "B00378064458",
+    "B00879153184",
+    "B00150921162",
+    "B00784814755",
+    "B00148944929"
+  ]
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ProductionsByIdsExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/production/details/byIds</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td><pre>
+
+{
+    "ids":["B00809994585"]
+}
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+  "productionDetails": [
+  {
+    "id": "B00809994585",
+    "name": "The Predator",
+    "productionMedia": {
+      "imageData": {
+        "coverImageUrl": "&lt;imageUrl&gt;",
+        "promoImageUrls": ["&lt;imageUrl&gt;"]
+      },
+      "trailerData": {
+        "trailerUrls": ["&lt;trailerUrl&gt;"]
+      }
+    },
+    "synopsis": "Synopsis",
+    "advisoryRating": "No Rating",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Horror",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "runtimeMinutes": 0,
+    "releaseDate": "2018-09-14"
+  }
+  ]
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ProductionSearchExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/production/search/byName</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td>x-api-key</td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td>name=Captain Marvel</td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+    "productionDetails": [
+        {
+            "id": "B00362154100",
+            "name": "Captain Marvel",
+            "productionMedia": {
+                "imageData": {
+                    "coverImageUrl": "https://images.atomtickets.com/image/upload/w_520,h_780,q_auto/v1/ingestion-images-archive/archive/rm123368960.jpg",
+                    "promoImageUrls": []
+                },
+                "trailerData": {
+                    "trailerUrls": [
+                        "https://www.totaleclips.com/Bounce/b?eclipid=e162647&bitrateid=449&vendorid=17871",
+                        "https://www.totaleclips.com/Bounce/b?eclipid=e161939&bitrateid=449&vendorid=17871"
+                    ]
+                }
+            },
+            "contributors": {
+                "cast": [
+                    {
+                        "name": "Brie Larson",
+                        "characterName": "Carol Danvers, Vers, Captain Marvel"
+                    },
+                    {
+                        "name": "Samuel L. Jackson",
+                        "characterName": "Nick Fury"
+                    }
+                ],
+                "crew": [
+                    {
+                        "name": "Anna Boden",
+                        "role": "Director"
+                    }
+                ]
+            },
+            "synopsis": "Carol Danvers becomes one of the universe's most powerful heroes.",
+            "advisoryRating": "PG-13",
+            "genres": [
+                "Action",
+                "Adventure",
+                "Sci-Fi"
+            ],
+            "runtimeMinutes": 124,
+            "releaseDate": "2019-03-07",
+            "atomUserScore": 6
+        }
+    ]
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ShowtimeDetailsByVenueExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/showtime/details/byVenue/C0057070265</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td><pre>
+x-api-key
+X-Atom-Partner
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td>isoStartDate=2018-09-14T21:00:00Z&amp;isoEndDate=2018-09-14T21:30:00Z</td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+    "showtimeDetails": [
+        {
+            "showtimeId": "D00747321039",
+            "productionId": "B00879153184",
+            "venueId": "C0057070265",
+            "offerData": {
+                "offers": [
+                    {
+                        "label": "Ticket",
+                        "price": {
+                            "value": 12.75,
+                            "currencyCode": "USD"
+                        }
+                    }
+                ]
+            },
+            "utcShowtimeStart": "2018-09-14T20:30:00Z",
+            "localShowtimeStart": "2018-09-14T13:30:00-07:00",
+            "attributes": [
+                "STADIUM-SEATING",
+                "CC"
+            ]
+        },
+        {
+            "showtimeId": "D00383546016",
+            "productionId": "B00651431218",
+            "venueId": "C0057070265",
+            "offerData": {
+                "offers": [
+                    {
+                        "label": "Matinee",
+                        "price": {
+                            "value": 14,
+                            "currencyCode": "USD"
+                        }
+                    },
+                    {
+                        "label": "Child",
+                        "price": {
+                            "value": 13,
+                            "currencyCode": "USD"
+                        }
+                    },
+                    {
+                        "label": "Senior",
+                        "price": {
+                            "value": 13,
+                            "currencyCode": "USD"
+                        }
+                    }
+                ]
+            },
+            "utcShowtimeStart": "2018-09-14T20:40:00Z",
+            "localShowtimeStart": "2018-09-14T13:40:00-07:00",
+            "attributes": [
+                "CC",
+                "DV",
+                "STADIUM-SEATING",
+                "RESERVED"
+            ]
+        }
+    ],
+    "preOrderDetails": [
+        {
+            "productionId": "B00856886544",
+            "venueId": "C0057070265",
+            "showtimeDays": [
+                "2018-10-06T00:00:00-07:00"
+            ]
+        },
+        {
+            "productionId": "B00775577087",
+            "venueId": "C0057070265",
+            "showtimeDays": [
+                "2018-09-25T00:00:00-07:00",
+                "2018-09-26T00:00:00-07:00",
+                "2018-09-27T00:00:00-07:00",
+                "2018-09-29T00:00:00-07:00",
+                "2018-10-02T00:00:00-07:00"
+            ]
+        }
+    ],
+    "attributeMap": {
+        "RESERVED": {
+            "id": "RESERVED",
+            "iconUrl": "&lt;imageUrl&gt;",
+            "friendlyName": "Reserved Seating",
+            "description": "Description"
+        }
+    }
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ShowtimeDetailsByIdsExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/showtime/details/byIds</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td><pre>
+x-api-key
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td><pre>
+{
+    "ids":["D00747321039"]
+}
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+    "showtimeDetails": [
+        {
+            "showtimeId": "D00747321039",
+            "productionId": "B00879153184",
+            "venueId": "C0057070265",
+            "offerData": {
+                "offers": [
+                    {
+                        "label": "Ticket",
+                        "price": {
+                            "value": 12.75,
+                            "currencyCode": "USD"
+                        }
+                    }
+                ]
+            },
+            "utcShowtimeStart": "2018-09-14T20:30:00Z",
+            "localShowtimeStart": "2018-09-14T13:30:00-07:00",
+            "attributes": [
+                "STADIUM-SEATING",
+                "CC"
+            ]
+        }
+    ],
+    "preOrderDetails": [],
+    "attributeMap": {
+        "STADIUM-SEATING": {
+            "id": "STADIUM-SEATING",
+            "iconUrl": "&lt;imageUrl&gt;",
+            "friendlyName": "Stadium seating",
+            "description": "Stadium seating."
+        }
+    }
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+      <br/>
+      <table id="ShowtimeDetailsForVenuesExample">
+          <tbody>
+          <tr>
+              <td>URL</td>
+              <td>http://api-beta.atomtickets.com/partner/v1/showtime/details/forVenues</td>
+          </tr>
+          <tr>
+              <td>Header</td>
+              <td><pre>
+x-api-key
+X-Atom-Partner
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Query Params</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Request</td>
+              <td><pre>
+{
+    "venueIds":["C0057070265","C00110921804","C00401723167","C00928817799"],
+    "isoDateBounds":{
+        "isoStartDate":"2019-02-25T07:00:00Z",
+        "isoEndDate":"2019-02-26T07:00:00Z"
+    },
+    "includeProductionDetails":true
+}
+              </pre></td>
+          </tr>
+          <tr>
+              <td>Response</td>
+              <td><pre>
+{
+    "venueShowtimeDetailsMap": {
+        "C00110921804": {
+            "showtimeDetails": [],
+            "preOrderDetails": [{
+                "productionId": "B00362154100",
+                "venueId": "C00110921804",
+                "showtimeDays": [
+                    "2019-03-07T00:00:00-08:00",
+                    "2019-03-08T00:00:00-08:00",
+                    "2019-03-09T00:00:00-08:00",
+                    "2019-03-10T00:00:00-08:00",
+                    "2019-03-11T00:00:00-08:00",
+                    "2019-03-12T00:00:00-08:00",
+                    "2019-03-13T00:00:00-08:00",
+                    "2019-03-14T00:00:00-08:00",
+                    "2019-03-15T00:00:00-08:00",
+                    "2019-03-16T00:00:00-08:00",
+                    "2019-03-17T00:00:00-08:00",
+                    "2019-03-18T00:00:00-08:00",
+                    "2019-03-19T00:00:00-08:00",
+                    "2019-03-20T00:00:00-08:00",
+                    "2019-03-21T00:00:00-08:00"
+                ]
+            }]
+        },
+        "C00401723167": {
+            "showtimeDetails": [{
+                    "showtimeId": "D00841132746",
+                    "productionId": "B00629445690",
+                    "venueId": "C00401723167",
+                    "offerData": {
+                        "offers": []
+                    },
+                    "utcShowtimeStart": "2019-02-25T19:30:00Z",
+                    "localShowtimeStart": "2019-02-25T11:30:00-08:00",
+                    "attributes": [
+                        "RESERVED",
+                        "DVS"
+                    ]
+                },
+                {
+                    "showtimeId": "D00877858635",
+                    "productionId": "B00629445690",
+                    "venueId": "C00401723167",
+                    "offerData": {
+                        "offers": []
+                    },
+                    "utcShowtimeStart": "2019-02-25T22:00:00Z",
+                    "localShowtimeStart": "2019-02-25T14:00:00-08:00",
+                    "attributes": [
+                        "RESERVED",
+                        "DVS",
+                        "REALD3D"
+                    ]
+                }
+            ],
+            "preOrderDetails": [{
+                "productionId": "B00178318857",
+                "venueId": "C00401723167",
+                "showtimeDays": [
+                    "2019-03-02T00:00:00-08:00"
+                ]
+            }]
+        }
+    },
+    "attributeMap": {
+        "DVS": {
+            "id": "DVS",
+            "iconUrl": "&lt;imageUrl&gt;",
+            "friendlyName": "Descriptive Video",
+            "description": "Description"
+        }
+    },
+    "productionDetailsMap": {
+        "B00949090095": {
+            "id": "B00949090095",
+            "name": "Gone with the Wind 80th Anniversary",
+            "productionMedia": {
+                "imageData": {
+                    "coverImageUrl": "&lt;imageUrl&gt;",
+                    "promoImageUrls": []
+                },
+                "trailerData": {
+                    "trailerUrls": []
+                }
+            },
+            "contributors": {
+                "cast": [],
+                "crew": []
+            },
+            "synopsis": "",
+            "advisoryRating": "No Rating",
+            "genres": [
+                ""
+            ],
+            "runtimeMinutes": 0
+        }
+    }
+}
+              </pre></td>
+          </tr>
+          </tbody>
+      </table>
+    </body>
+</html>
